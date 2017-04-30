@@ -1,18 +1,19 @@
 require 'httparty'
-class PostsController < ApplicationController
-  def index
-    require 'pry'; binding.pry
-    base_url = 'http://localhost:3000'
-    puts 'test string'
-    res_headers = {}
-    res_headers['access-token'] = cookies.encrypted['access-token']
-    res_headers['token-type'] = cookies.encrypted['token-type']
-    res_headers['expiry'] = cookies.encrypted['expiry']
-    res_headers['client'] = cookies.encrypted['client']
-    res_headers['uid'] = cookies.encrypted['uid']
 
-    res = HTTParty.get(base_url+'/posts',
-                headers: request_headers)
+class PostsController < ApplicationController
+  before_action :authenticate_user
+
+  def index
+    puts 'test string'
+    req_headers = {}
+    req_headers['access-token'] = cookies.encrypted['access-token']
+    req_headers['token-type']   = cookies.encrypted['token-type']
+    req_headers['expiry']       = cookies.encrypted['expiry']
+    req_headers['client']       = cookies.encrypted['client']
+    req_headers['uid']          = cookies.encrypted['uid']
+
+    @res = HTTParty.get(service_base_url+'/posts',
+           headers: req_headers)
   end
 
 end

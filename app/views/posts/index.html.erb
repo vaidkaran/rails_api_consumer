@@ -1,0 +1,9 @@
+<h1>You should see the response from the webservice here</h1>
+<br>
+<%= link_to "Sign Out", sign_out_path %>
+<br>
+
+<% @res.each do |key, value| %>
+  <%= 'key is: ' + key%>
+  <%= 'value is: ' + value%>
+<% end %>
